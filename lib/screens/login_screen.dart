@@ -10,6 +10,8 @@ import '../services/firebase_service.dart';
 import '../screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String routeName = '/login_screen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -19,54 +21,60 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   FirebaseServices _services = FirebaseServices();
-
-  String username;
-  String password;
+  var _usernameTextController = TextEditingController();
+  var _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     ArsProgressDialog progressDialog = ArsProgressDialog(context,
         dismissable: true,
         blur: 2,
-        backgroundColor: Color(0xFF84c225),
+        backgroundColor: Color(0xFF84c225).withOpacity(.5),
         animationDuration: Duration(milliseconds: 500));
 
-    Future<void> _login() async {
-      print('validate');
+    _login({String username, String password}) async {
       progressDialog.show();
-      _services.getAdminCredentials().then((value) {
-        value.docs.forEach((doc) async {
-          if (doc.get('username') == username) {
-            if (doc.get('password') == password) {
-              UserCredential userCredential =
-                  await FirebaseAuth.instance.signInAnonymously();
-              progressDialog.dismiss();
+      _services.getAdminCredentials(username).then((value) async {
+        if (value.exists) {
+          if (value.data()['username'] == username) {
+            if (value.data()['password'] == password) {
+              // if both is correct, will login
+              try {
+                UserCredential userCredential =
+                    await FirebaseAuth.instance.signInAnonymously();
 
-              if (userCredential.user.uid != null) {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
-                return;
-              } else {
-                _showMyDialog(
-                  title: 'login',
-                  message: 'Login Failed!',
-                );
+                if (userCredential != null) {
+                  // if signin Sucess, will navigate to HomeScreen
+                  progressDialog.dismiss();
+                  Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+                }
+              } catch (e) {
+                //if signing failed
+                progressDialog.dismiss();
+                _showMyDialog(title: 'Login ', message: '${e.toString()}');
               }
-            } else {
-              progressDialog.dismiss();
-
-              _showMyDialog(
-                title: 'Invalid Password',
-                message: 'password you entered is incorrect.',
-              );
+              return;
             }
-          } else {
+            //if password incorrect
+            progressDialog.dismiss();
             _showMyDialog(
-              title: 'Invalid Username',
-              message: 'User Name you entered is not valid.',
+              title: 'Invalid Password',
+              message: 'Password you have entered is invalid',
             );
+            return;
           }
-        });
+          // if username is incorrect
+          progressDialog.dismiss();
+          _showMyDialog(
+            title: 'Invalid Username',
+            message: 'Username you have entered is incorrect',
+          );
+        }
+        progressDialog.dismiss();
+        _showMyDialog(
+          title: 'Invalid Username',
+          message: 'Username you have entered is incorrect',
+        );
       });
     }
 
@@ -136,13 +144,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 20,
                                     ),
                                     TextFormField(
+                                      controller: _usernameTextController,
                                       validator: (value) {
                                         if (value.isEmpty) {
                                           return 'Enter Username';
                                         }
-                                        setState(() {
-                                          username = value;
-                                        });
+
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -164,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 20,
                                     ),
                                     TextFormField(
+                                      controller: _passwordTextController,
                                       validator: (value) {
                                         if (value.isEmpty) {
                                           return 'Enter Password';
@@ -171,12 +179,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         if (value.length < 6) {
                                           return 'Minimum 6 characters';
                                         }
-                                        setState(() {
-                                          password = value;
-                                        });
+
                                         return null;
                                       },
-                                      obscureText: true,
+                                      obscureText: false,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(Icons.vpn_key_sharp),
                                         labelText: 'Password',
@@ -205,7 +211,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: FlatButton(
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
-                                          _login();
+                                          _login(
+                                            username:
+                                                _usernameTextController.text,
+                                            password:
+                                                _passwordTextController.text,
+                                          );
                                         }
                                       },
                                       color: Theme.of(context).primaryColor,
