@@ -27,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     ArsProgressDialog progressDialog = ArsProgressDialog(context,
-        dismissable: true,
         blur: 2,
         backgroundColor: Color(0xFF84c225).withOpacity(.5),
         animationDuration: Duration(milliseconds: 500));
@@ -51,29 +50,35 @@ class _LoginScreenState extends State<LoginScreen> {
               } catch (e) {
                 //if signing failed
                 progressDialog.dismiss();
-                _showMyDialog(title: 'Login ', message: '${e.toString()}');
+                _services.showMyDialog(
+                    context: context,
+                    title: 'Login ',
+                    message: '${e.toString()}');
               }
               return;
             }
             //if password incorrect
             progressDialog.dismiss();
-            _showMyDialog(
+            _services.showMyDialog(
+              context: context,
               title: 'Invalid Password',
-              message: 'Password you have entered is invalid',
+              message: 'Password you have entered is invalid , try again',
             );
             return;
           }
           // if username is incorrect
           progressDialog.dismiss();
-          _showMyDialog(
+          _services.showMyDialog(
+            context: context,
             title: 'Invalid Username',
-            message: 'Username you have entered is incorrect',
+            message: 'Username you have entered is incorrect , try again',
           );
         }
         progressDialog.dismiss();
-        _showMyDialog(
+        _services.showMyDialog(
+          context: context,
           title: 'Invalid Username',
-          message: 'Username you have entered is incorrect',
+          message: 'Username you have entered is incorrect , try again',
         );
       });
     }
@@ -243,34 +248,6 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
       ),
-    );
-  }
-
-  Future<void> _showMyDialog({title, message}) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(message),
-                Text('Please try again'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
