@@ -1,3 +1,4 @@
+import 'package:admin_web_app_flutter/screens/vendor_screen.dart';
 import 'package:flutter/material.dart';
 
 import './screens/splash_screen.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         NotificationScreen.routeName: (ctx) => NotificationScreen(),
         AdminUserScreen.routeName: (ctx) => AdminUserScreen(),
         SettingsScreen.routeName: (ctx) => SettingsScreen(),
+        VendorScreen.routeName: (ctx) => VendorScreen(),
       },
     );
   }

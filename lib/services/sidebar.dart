@@ -1,3 +1,4 @@
+import 'package:admin_web_app_flutter/screens/vendor_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
@@ -27,6 +28,11 @@ class SideBarWidget {
           title: 'Banners',
           route: BannerScreen.routeName,
           icon: CupertinoIcons.photo,
+        ),
+        MenuItem(
+          title: 'Vendor',
+          route: VendorScreen.routeName,
+          icon: CupertinoIcons.group_solid,
         ),
         MenuItem(
           title: 'Categories',

@@ -1,15 +1,18 @@
+import 'package:admin_web_app_flutter/widgets/vendor_filter_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
 import '../services/sidebar.dart';
 
-import '../widgets/banner_widget.dart';
-import '../widgets/banner_upload_widget.dart';
+import '../widgets/vender_datatable_widget.dart';
 
-class BannerScreen extends StatelessWidget {
-  static const String routeName = '/banner_screen';
+class VendorScreen extends StatefulWidget {
+  static const String routeName = '/vendor_screen';
+  @override
+  _VendorScreenState createState() => _VendorScreenState();
+}
 
+class _VendorScreenState extends State<VendorScreen> {
   @override
   Widget build(BuildContext context) {
     SideBarWidget _sidebar = SideBarWidget();
@@ -27,7 +30,7 @@ class BannerScreen extends StatelessWidget {
           ),
         ),
       ),
-      sideBar: _sidebar.sideBarMenus(context, BannerScreen.routeName),
+      sideBar: _sidebar.sideBarMenus(context, VendorScreen.routeName),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.topLeft,
@@ -36,22 +39,24 @@ class BannerScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Banner Screen',
+                'Manage Vendors',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 36,
                 ),
               ),
-              Text('Add / Delete Home Screen Banner Images'),
+              Text('Manage all the Vendors Activites'),
               Divider(
                 thickness: 5,
               ),
-              // Banner
-              BannerWidget(),
+              VendorFilterWidget(),
               Divider(
                 thickness: 5,
               ),
-              BannerUploadWidget(),
+              VendorsDataTable(),
+              Divider(
+                thickness: 5,
+              ),
             ],
           ),
         ),

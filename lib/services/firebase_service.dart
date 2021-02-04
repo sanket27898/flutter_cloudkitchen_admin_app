@@ -6,6 +6,8 @@ class FirebaseServices {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   CollectionReference banners = FirebaseFirestore.instance.collection('slider');
+  CollectionReference vendors =
+      FirebaseFirestore.instance.collection('vendors');
 
   FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -28,6 +30,18 @@ class FirebaseServices {
 
   deleteBannerImagefromdb(id) async {
     firestore.collection('slider').doc(id).delete();
+  }
+
+  updateVendorStatus({id, status}) async {
+    vendors.doc(id).update({
+      'accVerified': status ? false : true,
+    });
+  }
+
+  updateTopPickedVendor({id, status}) async {
+    vendors.doc(id).update({
+      'isTopPicked': status ? false : true,
+    });
   }
 
   Future<void> confirmDeleteDialog({title, message, context, id}) async {
