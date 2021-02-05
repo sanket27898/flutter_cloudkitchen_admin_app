@@ -4,8 +4,8 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
 import '../services/sidebar.dart';
 
-import '../widgets/banner_widget.dart';
-import '../widgets/banner_upload_widget.dart';
+import '../widgets/banner/banner_upload_widget.dart';
+import '../widgets/banner/banner_widget.dart';
 
 class BannerScreen extends StatelessWidget {
   static const String routeName = '/banner_screen';

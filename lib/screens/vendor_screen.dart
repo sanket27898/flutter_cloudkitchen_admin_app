@@ -3,7 +3,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
 import '../services/sidebar.dart';
 
-import '../widgets/vender_datatable_widget.dart';
+import '../widgets/vendor/vender_datatable_widget.dart';
 
 class VendorScreen extends StatefulWidget {
   static const String routeName = '/vendor_screen';

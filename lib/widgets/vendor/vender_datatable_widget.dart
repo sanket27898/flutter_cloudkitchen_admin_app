@@ -1,9 +1,11 @@
-import 'package:admin_web_app_flutter/services/firebase_service.dart';
-import 'package:admin_web_app_flutter/widgets/vendor_details_box.dart';
-import 'package:chips_choice/chips_choice.dart';
+import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter/material.dart';
+import 'package:chips_choice/chips_choice.dart';
+
+import '../../services/firebase_service.dart';
+import '../../widgets/vendor/vendor_details_box.dart';
 
 class VendorsDataTable extends StatefulWidget {
   @override

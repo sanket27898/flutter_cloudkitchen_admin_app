@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fdb;
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 
-import '../services/firebase_service.dart';
+import './../../services/firebase_service.dart';
 
 class BannerUploadWidget extends StatefulWidget {
   @override

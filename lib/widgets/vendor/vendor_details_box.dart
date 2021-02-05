@@ -1,5 +1,6 @@
 import 'package:admin_web_app_flutter/constants.dart';
 import 'package:admin_web_app_flutter/services/firebase_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,8 @@ class _VendorDetailssBoxState extends State<VendorDetailssBox> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _services.vendors.doc(widget.uid).get(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text('Something went Wrong'),
