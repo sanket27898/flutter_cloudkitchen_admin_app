@@ -1,4 +1,3 @@
-import 'package:admin_web_app_flutter/widgets/vendor_filter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
@@ -46,10 +45,6 @@ class _VendorScreenState extends State<VendorScreen> {
                 ),
               ),
               Text('Manage all the Vendors Activites'),
-              Divider(
-                thickness: 5,
-              ),
-              VendorFilterWidget(),
               Divider(
                 thickness: 5,
               ),
