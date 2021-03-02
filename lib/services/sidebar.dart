@@ -49,11 +49,13 @@ class SideBarWidget {
           route: NotificationScreen.routeName,
           icon: Icons.notifications,
         ),
-        MenuItem(
-          title: 'Admin Users',
-          route: AdminUserScreen.routeName,
-          icon: Icons.admin_panel_settings,
-        ),
+        MenuItem(title: 'Product', icon: Icons.admin_panel_settings, children: [
+          MenuItem(
+            title: 'Product List',
+            route: AdminUserScreen.routeName,
+            icon: Icons.notifications,
+          ),
+        ]),
         MenuItem(
           title: 'Settings',
           route: SettingsScreen.routeName,

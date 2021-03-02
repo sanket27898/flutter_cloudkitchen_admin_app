@@ -36,7 +36,7 @@ class CategoryCardWidget extends StatelessWidget {
                     width: double.infinity,
                     child: Image.network(
                       document['image'],
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     )),
                 FittedBox(
                   fit: BoxFit.fill,
